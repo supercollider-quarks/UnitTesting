@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title></title>
+<meta name="Generator" content="Cocoa HTML Writer">
+<meta name="CocoaVersion" content="824.42">
+<style type="text/css">
+p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Helvetica}
+p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; min-height: 12.0px}
+p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Lucida Grande}
+p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Lucida Grande; min-height: 15.0px}
+p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #0000bf}
+p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #000000; min-height: 12.0px}
+p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #bf0000}
+p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #000000}
+p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco}
+span.s1 {color: #000000}
+span.s2 {color: #0000bf}
+span.s3 {color: #606060}
+span.Apple-tab-span {white-space:pre}
+</style>
+</head>
+<body>
+<p class="p1"><b>UnitTest</b></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p3">Standard unit test class</p>
+<p class="p4"><br></p>
+<p class="p3">You may put your test classes anywhere you like.</p>
+<p class="p3">UnitTests for Common classes are kept in the CommonTests quark.</p>
+<p class="p3">This enables you to easily install and uninstall tests.</p>
+<p class="p4"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p5">UnitTest<span class="s1">.runAll</span></p>
+<p class="p6"><br></p>
+<p class="p7">// looks for a class called TestYourClass and runs it</p>
+<p class="p5">YourClass<span class="s1">.test</span></p>
+<p class="p6"><br></p>
+<p class="p7">// runs a test class</p>
+<p class="p5">TestYourClass<span class="s1">.run</span></p>
+<p class="p6"><br></p>
+<p class="p6"><br></p>
+<p class="p5">TestYourClass<span class="s1"> : </span>UnitTest<span class="s1"> {</span></p>
+<p class="p6"><br></p>
+<p class="p8"><span class="Apple-tab-span">	</span>setUp {</p>
+<p class="p7"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>// will be called before each test</p>
+<p class="p8"><span class="Apple-tab-span">	</span>}</p>
+<p class="p8"><span class="Apple-tab-span">	</span>tearDown {</p>
+<p class="p7"><span class="s1"><span class="Apple-tab-span">	</span> <span class="Apple-tab-span">	</span></span>// will be called after each test</p>
+<p class="p8"><span class="Apple-tab-span">	</span> }</p>
+<p class="p6"><span class="Apple-tab-span">	</span><span class="Apple-converted-space"> </span></p>
+<p class="p8"><span class="Apple-tab-span">	</span>test_yourMethod {</p>
+<p class="p7"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// every method named test_</p>
+<p class="p7"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// will be run</p>
+<p class="p6"><span class="Apple-tab-span">	</span> <span class="Apple-converted-space"> <span class="Apple-tab-span">	</span></span></p>
+<p class="p8"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span><span class="s2">this</span>.assert( 6 == 6, <span class="s3">"6 should equal 6"</span>);</p>
+<p class="p6"><span class="Apple-tab-span">	</span> <span class="Apple-converted-space"> <span class="Apple-tab-span">	</span></span></p>
+<p class="p8"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span><span class="s2">this</span>.assertEquals( 9, 9 ,<span class="s3">"9 should equal 9"</span>);</p>
+<p class="p6"><span class="Apple-tab-span">	</span> <span class="Apple-converted-space"> <span class="Apple-tab-span">	</span></span></p>
+<p class="p8"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span><span class="s2">this</span>.assertFloatEquals( 4.0 , 1.0 * 4.0 / 4.0 * 4.0, <span class="s3">"floating point math should be close to equal"</span>);</p>
+<p class="p6"><span class="Apple-tab-span">	</span><span class="Apple-converted-space"> </span></p>
+<p class="p7"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// we are inside a Routine, you may wait</p>
+<p class="p8"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span>1.0.wait;</p>
+<p class="p6"><span class="Apple-tab-span">	</span> <span class="Apple-converted-space"> <span class="Apple-tab-span">	</span></span></p>
+<p class="p7"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// this will wait until the server is booted</p>
+<p class="p8"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span><span class="s2">this</span>.bootServer;</p>
+<p class="p7"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// if the server is already booted it will free all nodes</p>
+<p class="p7"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// and create new allocators, giving you a clean slate</p>
+<p class="p6"><span class="Apple-tab-span">	</span> <span class="Apple-converted-space"> <span class="Apple-tab-span">	</span></span></p>
+<p class="p8"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span>p = <span class="s2">Patch</span>({ <span class="s2">SinOsc</span>.ar });</p>
+<p class="p8"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span>p.play;</p>
+<p class="p6"><span class="Apple-tab-span">	</span> <span class="Apple-converted-space"> <span class="Apple-tab-span">	</span></span></p>
+<p class="p7"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// will wait until the condition is true</p>
+<p class="p7"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// will be considered a failure after 10 seconds</p>
+<p class="p8"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span><span class="s2">this</span>.wait( { p.isPlaying },<span class="s3">"waiting for patch to play"</span>,10);</p>
+<p class="p6"><span class="Apple-tab-span">	</span> <span class="Apple-converted-space"> <span class="Apple-tab-span">	</span></span></p>
+<p class="p8"><span class="Apple-tab-span">	</span>}</p>
+<p class="p6"><span class="Apple-tab-span">	</span></p>
+<p class="p8">}</p>
+<p class="p2"><br></p>
+<p class="p9">see also MixedBundleTester, a MixedBundle that saves all of its bundles so that your tests can query what got sent to the Server.</p>
+<p class="p2"><br></p>
+</body>
+</html>
