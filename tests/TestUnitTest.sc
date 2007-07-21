@@ -43,9 +43,13 @@ TestUnitTest : UnitTest {
 			}, "assert asynch should have triggered the server to boot and then run the test block");
 	}
 */	
+	test_cmdPeriod {
+		// can't call it here though
+		this.assert( UnitTest.respondTo(\cmdPeriod),"should have cmdPeriod implemented")
+	}
 	
 	test_testMethods {
-		var numTestMethods = 6;
+		var numTestMethods = 7;
 		this.assert( this.testMethods.size == numTestMethods, "should be " + numTestMethods + " test methods");
 	}
 

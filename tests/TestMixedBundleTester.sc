@@ -1,8 +1,12 @@
 
 TestMixedBundleTester : UnitTest {
+
 	var t;
+
 	setUp {
 		t = MixedBundleTester.new;
+		MixedBundleTester.reset;
+
 	}
 	test_findMessage {
 		t.add( [ "/n_free",1001]);
@@ -11,7 +15,10 @@ TestMixedBundleTester : UnitTest {
 		Server.default.latency.wait;
 
 		this.assert( MixedBundleTester.findMessage( [ "/n_free",1001]),
-		 		"should find the message in its sent messages")
+		 		"should find the message in its sent messages");
+
+		this.assert( MixedBundleTester.findMessage( [ "/n_free"]),
+		 		"should match any /n_free message")
 	}
 
 	test_findPreparationMessage {
@@ -19,7 +26,7 @@ TestMixedBundleTester : UnitTest {
 
 		this.bootServer;
 
-		d = SynthDef("help-Synth-get", { arg freq = 440;
+		d = SynthDef("TestOSCBundle", { arg freq = 440;
 			Out.ar(0, SinOsc.ar(freq, 0, 0.1));
 		});
 
@@ -39,54 +46,46 @@ TestMixedBundleTester : UnitTest {
 
 		this.assert( MixedBundleTester.findPreparationMessage(  ["/d_recv", d.asBytes] ),
 		 		"should find the synth def message in its preparation messages" );
+
+		this.assert( MixedBundleTester.findPreparationMessage(  ["/d_recv"] ),
+		 		"should match any synth def /d_recv" );
 	}
 
-	test_prepare {
-		this.makeDefs(100)
-	}
-	
-// crashes the language
-//	test_largePrepare {
-//		this.makeDefs(1000);
-//	}
+	// test that after sending that the bundle gets put in bundlesSent
+	test_send { arg numDefs = 100;
+		var functionFired = false, sent;
 
-	makeDefs { |numDefs|
-		
-		var sd, b,functionFired = false, sent;
-
-		MixedBundleTester.reset;
-
-		b = MixedBundleTester.new;
-
-		sd = Array.fill(numDefs,{ |i|
-				var d;
-				d = SynthDef( "TestOSCBundle" ++ i,{
-						SinOsc.ar([400,403] + i)
-				});
-
-				b.addPrepare( ["/d_recv", d.asBytes] )
-
-			});
-		b.addFunction({ functionFired = true });
-
+		this.makeDefs(numDefs);
+		t.addFunction({ functionFired = true });
 
 		this.bootServer;
 
-
-		b.send(Server.default);
-		this.asynchAssert( {functionFired}, {
-			this.assert( functionFired, "functionFired should be set");
-		},"waiting for send to finish prepare and run prSend",numDefs / 4);
+		t.send(Server.default);
+		this.wait( { functionFired }, "wait for functionFired to be set by bundle.doFunction");
 
 		// should be 100 in preparationMessages
 		this.assert( MixedBundleTester.bundlesSent.size == 1, "should be 1 bundle sent");
-		// this alone is a victory
-		this.assert( functionFired, "functionFired should be set when the bundle did its prSend / doFunctions");
 
 		sent = MixedBundleTester.bundlesSent.first;
-		this.assert( sent === b, "it should be our bundle");
+		this.assert( sent === t, "it should be our bundle");
 		this.assert( sent.preparationMessages.size == numDefs,"should be " + numDefs + " in preparationMessages");
+	}
 
+// crashes the language
+//	test_largePrepare {
+//		this.test_prepare(1000)
+//	}
+
+	makeDefs { |numDefs|
+		numDefs.do({ |i|
+			var d;
+			d = SynthDef( "TestOSCBundle" ++ i,{
+					SinOsc.ar([400,403] + i)
+			});
+
+			t.addPrepare( ["/d_recv", d.asBytes] )
+
+		});
 	}
 
 }

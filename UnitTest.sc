@@ -55,7 +55,7 @@ UnitTest {
 		^boolean
 	}
 	assertEquals { |a,b,message=""|
-		this.assert( a == b, message + "a:" + a + "b:" + b)
+		this.assert( a == b, message + "is:" + a + "should be:" + b)
 	}
 	assertFloatEquals { |a,b,message="",within=0.00001|
 		this.assert( (a - b).abs < within, message + "a:" + "b:" + b);
@@ -106,26 +106,34 @@ UnitTest {
 	failed { arg method,message;
 		var r;
 		failures = failures.add(r = UnitTestResult(this,method,message));
-		Post << "FAIL:"; r.report;
+		Post << Char.nl << "FAIL:"; 
+		r.report;
+		Post << Char.nl;
 	}
 	passed { arg method,message;
 		var r;
 		passes = passes.add(r = UnitTestResult(this,method,message));
-		Post << "PASS:"; r.report;
+		Post << "PASS:"; 
+		r.report;
 	}
 
 	*report {
+		Post.nl;
 		"UNIT TEST.............".inform;
 		if(failures.size > 0,{
 			"There were failures:".inform;
 			failures.do({ arg results;
+				
 				results.report
 			});
 		},{
 			"There were no failures".inform;
 		})
 	}
-	commandPeriod {
+	*initClass {
+		CmdPeriod.add(this);
+	}
+	*cmdPeriod {
 		if(routine.notNil,{
 			routine.stop;
 			routine = nil;
@@ -135,7 +143,7 @@ UnitTest {
 	run { | reset=true,report=true|
 		var function;
 		if(reset,{ this.class.reset });
-
+		if(report,{ ("RUNNING UNIT TEST" + this).inform });
 		function = {
 			this.testMethods.do({ arg method;
 				this.setUp;

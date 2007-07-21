@@ -14,7 +14,7 @@ MixedBundleTester : MixedBundle {
 
 	// private //
 	prSend { arg server, latency;
-		latency = latency ? Server.default.latency;
+		latency = latency ?? { server.latency };
 		super.prSend(server,latency);
 		SystemClock.sched(latency,{
 			bundlesSent = bundlesSent.add( this );
@@ -40,23 +40,39 @@ MixedBundleTester : MixedBundle {
 	*reset {
 		bundlesSent = [];
 	}
+	// matches message :
+	// [9,"defName"]  matches any [9,"defName" (, 1001,0,1)]
 	*findMessage { arg message;
 		if(bundlesSent.isNil,{ ^false });
 		^bundlesSent.any({ |b|
 			if(b.messages.isNil,{
 				false
 			},{
-				b.messages.any({ |m| m == message })
+				b.messages.any({ |m|
+					if(m.size < message.size,{
+						false
+					},{
+						m.copyRange(0,message.size - 1) == message
+					})
+				})
 			})
 		})
 	}
+	// matches message :
+	// ["/d_recv"] matches any [/d_recv, (data )]
 	*findPreparationMessage { arg message;
 		if(bundlesSent.isNil,{ ^false });
 		^bundlesSent.any({ |b|
 			if(b.preparationMessages.isNil,{
 				false
 			},{
-				b.preparationMessages.any({ |pm| pm == message })
+				b.preparationMessages.any({ |pm|
+					if(pm.size < message.size,{
+						false
+					},{
+						pm.copyRange(0,message.size - 1) == message
+					})
+				})
 			})
 		})
 	}
