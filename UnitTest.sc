@@ -57,8 +57,8 @@ UnitTest {
 	assertEquals { |a,b,message=""|
 		this.assert( a == b, message + "is:" + a + "should be:" + b)
 	}
-	assertFloatEquals { |a,b,message="",within=0.00001|
-		this.assert( (a - b).abs < within, message + "a:" + "b:" + b);
+	assertFloatEquals { |a,b,message="",within=0.0001|
+		this.assert( (a - b).abs < within, message + "is:" + a + "shouldBe:" + b);
 	}
 	// waits for condition with a maxTime limit
 	wait { |condition,failureMessage,maxTime = 10.0|

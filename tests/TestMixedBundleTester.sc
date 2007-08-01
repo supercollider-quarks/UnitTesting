@@ -13,7 +13,7 @@ TestMixedBundleTester : UnitTest {
 
 		t.send(Server.default);
 		Server.default.latency.wait;
-
+		0.01.wait;
 		this.assert( MixedBundleTester.findMessage( [ "/n_free",1001]),
 		 		"should find the message in its sent messages");
 

@@ -45,7 +45,7 @@ TestUnitTest : UnitTest {
 */	
 	test_cmdPeriod {
 		// can't call it here though
-		this.assert( UnitTest.respondTo(\cmdPeriod),"should have cmdPeriod implemented")
+		this.assert( UnitTest.respondsTo(\cmdPeriod),"should have cmdPeriod implemented")
 	}
 	
 	test_testMethods {
