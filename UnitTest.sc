@@ -46,19 +46,19 @@ UnitTest {
 			this.report;
 		}).play(AppClock)
 	}
-	assert { | boolean,message|
+	assert { | boolean,message, report=true|
 		if(boolean.not,{
-			this.failed(currentMethod,message)
+			this.failed(currentMethod,message, report)
 		},{
-			this.passed(currentMethod,message)
+			this.passed(currentMethod,message, report)
 		});
 		^boolean
 	}
-	assertEquals { |a,b,message=""|
-		this.assert( a == b, message + "is:" + a + "should be:" + b)
+	assertEquals { |a,b,message="", report=true|
+		this.assert( a == b, message + "is:" + a + "should be:" + b, report)
 	}
-	assertFloatEquals { |a,b,message="",within=0.0001|
-		this.assert( (a - b).abs < within, message + "is:" + a + "shouldBe:" + b);
+	assertFloatEquals { |a,b,message="",within=0.0001, report=true|
+		this.assert( (a - b).abs < within, message + "is:" + a + "shouldBe:" + b, report);
 	}
 	// waits for condition with a maxTime limit
 	wait { |condition,failureMessage,maxTime = 10.0|
@@ -103,18 +103,22 @@ UnitTest {
 		});
 	}
 
-	failed { arg method,message;
+	failed { arg method,message, report=true;
 		var r;
 		failures = failures.add(r = UnitTestResult(this,method,message));
-		Post << Char.nl << "FAIL:"; 
-		r.report;
-		Post << Char.nl;
+		if(report){
+			Post << Char.nl << "FAIL:"; 
+			r.report;
+			Post << Char.nl;
+		};
 	}
-	passed { arg method,message;
+	passed { arg method,message, report=true;
 		var r;
 		passes = passes.add(r = UnitTestResult(this,method,message));
-		Post << "PASS:"; 
-		r.report;
+		if(report){
+			Post << "PASS:"; 
+			r.report;
+		};
 	}
 
 	*report {
