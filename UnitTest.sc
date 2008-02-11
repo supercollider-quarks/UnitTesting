@@ -3,7 +3,7 @@
 UnitTest {
 
 	var currentMethod;
-	classvar  <failures,<passes,routine;
+	classvar  <failures,<passes,routine,<>reportPasses = true;
 
 	// called before each test
 	setUp {}
@@ -60,6 +60,17 @@ UnitTest {
 	assertFloatEquals { |a,b,message="",within=0.0001, report=true|
 		this.assert( (a - b).abs < within, message + "\nIs:\n\t" + a + "\nShould be:\n\t" + b + "\n", report);
 	}
+	// make a further assertion only if it passed, or only if it failed
+	ifAsserts { | boolean,message, ifPassedFunc, ifFailedFunc report=true|
+		if(boolean.not,{
+			this.failed(currentMethod,message, report);
+			ifFailedFunc.value;
+		},{
+			this.passed(currentMethod,message, report);
+			ifPassedFunc.value;
+		});
+		^boolean
+	}
 	// waits for condition with a maxTime limit
 	wait { |condition,failureMessage,maxTime = 10.0|
 		var limit;
@@ -115,7 +126,7 @@ UnitTest {
 	passed { arg method,message, report=true;
 		var r;
 		passes = passes.add(r = UnitTestResult(this,method,message));
-		if(report){
+		if(report and: reportPasses){
 			Post << "PASS:"; 
 			r.report;
 		};
