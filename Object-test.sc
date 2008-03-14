@@ -3,7 +3,7 @@
 + Object {
 
 	*test { arg resetFailures=true,report=true;
-		UnitTest.testClass(this,resetFailures,report)
+		UnitTest.runTestClassForClass(this,resetFailures,report)
 	}
 
 }

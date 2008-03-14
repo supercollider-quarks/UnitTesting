@@ -48,10 +48,17 @@ TestUnitTest : UnitTest {
 		this.assert( UnitTest.respondsTo(\cmdPeriod),"should have cmdPeriod implemented")
 	}
 	
-	test_testMethods {
-		var numTestMethods = 7;
-		this.assert( this.testMethods.size == numTestMethods, "should be " + numTestMethods + " test methods");
+	test_findTestedClass {
+		this.assertEquals( TestInstr.findTestedClass,Instr)
 	}
 
+
+
+
+	/*** IF YOU ADD MORE TESTS, UPDATE THE numTestMethods var ***/
+	test_findTestMethods {
+		var numTestMethods = 8;
+		this.assert( this.findTestMethods.size == numTestMethods, "should be " + numTestMethods + " test methods");
+	}
 }
 

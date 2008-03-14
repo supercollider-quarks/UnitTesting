@@ -76,5 +76,50 @@ MixedBundleTester : MixedBundle {
 			})
 		})
 	}
+	
+	*report {
+		bundlesSent.do({ |bnd,i|
+			Post << "######## Bundle " << i << " ###########################" << Char.nl;
+			"preparationMessages:".postln;
+			bnd.preparationMessages.do({ |pm|
+				Post << Char.tab << pm << Char.nl;
+			});
+			"messages:".postln;
+			bnd.messages.do({ |msg|
+				Post << Char.tab << msg << Char.nl;
+			});
+			"sendFunctions:".postln;
+			bnd.sendFunctions.do({ |sf|
+				Post << Char.tab << sf << Char.nl;
+			});
+			"functions:".postln;
+			bnd.functions.do({ |sf|
+				Post << Char.tab;
+				if(sf.isKindOf(Function),{
+					sf.instVarAt('context').postln;
+				},{
+					if(sf.isKindOf(Message),{
+						"Message %:%(%)".format(sf.receiver,sf.selector, sf.args).postln;
+					},{
+						sf.postln;
+					});
+				});
+			});
+			"".postln;
+		})
+	}
+	// parse preparation messages for the def names of d_recv
+	defNames {
+		var names;
+		if(preparationMessages.isNil,{ ^[] });
+		names = preparationMessages.select({ |msg| msg[0] == "/d_recv" })
+					.collect({ |msg| SynthDesc.defNameFromBytes(msg[1]) });
+		^names
+	}
+	includesDefName { arg defName;
+		if(defName.isNil,{ Error("MixedBundleTester-includesDefName : defName was nil").throw });
+		^this.defNames.indexOfEqual(defName).notNil
+	}
+ 
 }
 
