@@ -58,19 +58,23 @@ UnitTest {
 
 	// call these in your test_ methods to check conditions
 	// and pass or fail
-	assert { | boolean,message, report=true|
+	assert { | boolean,message, report=true,onFailure|
 		if(boolean.not,{
-			this.failed(currentMethod,message, report)
+			this.failed(currentMethod,message, report);
+			if(onFailure.notNil,{
+				{ onFailure.value }.defer;
+				Error("UnitTest halted with onFailure handler.").throw;
+			});
 		},{
 			this.passed(currentMethod,message, report)
 		});
 		^boolean
 	}
-	assertEquals { |a,b,message="", report=true|
-		this.assert( a == b, message + "\nIs:\n\t" + a + "\nShould be:\n\t" + b + "\n", report)
+	assertEquals { |a,b,message="", report=true,onFailure|
+		this.assert( a == b, message + "\nIs:\n\t" + a + "\nShould be:\n\t" + b + "\n", report,onFailure)
 	}
-	assertFloatEquals { |a,b,message="",within=0.0001, report=true|
-		this.assert( (a - b).abs < within, message + "\nIs:\n\t" + a + "\nShould be:\n\t" + b + "\n", report);
+	assertFloatEquals { |a,b,message="",within=0.0001, report=true,onFailure|
+		this.assert( (a - b).abs < within, message + "\nIs:\n\t" + a + "\nShould be:\n\t" + b + "\n", report,onFailure);
 	}
 	// make a further assertion only if it passed, or only if it failed
 	ifAsserts { | boolean,message, ifPassedFunc, ifFailedFunc report=true|
