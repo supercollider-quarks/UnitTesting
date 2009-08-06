@@ -76,6 +76,9 @@ UnitTest {
 	assertFloatEquals { |a,b,message="",within=0.0001, report=true,onFailure|
 		this.assert( (a - b).abs < within, message + "\nIs:\n\t" + a + "\nShould be:\n\t" + b + "\n", report,onFailure);
 	}
+	assertArrayFloatEquals { |a,b,message="",within=0.0001, report=true,onFailure|
+		this.assert( ((a - b).abs < within).every(_==true), message + "\nIs:\n\t" + a + "\nShould be:\n\t" + b + "\n", report,onFailure);
+	}
 	// make a further assertion only if it passed, or only if it failed
 	ifAsserts { | boolean,message, ifPassedFunc, ifFailedFunc report=true|
 		if(boolean.not,{
