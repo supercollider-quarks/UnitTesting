@@ -13,8 +13,33 @@ UnitTest {
 	// all methods named test_ will be run
 	//test_writeYourTests {}
 
-
-
+	// UnitTest.gui
+	*gui {
+		// UnitTest GUI written by Dan Stowell 2009.
+		var w, allclasses, classlist, methodlist;
+		w = Window.new("[UnitTest GUI]", Rect(100, 100, 400, 600));
+		allclasses = UnitTest.allSubclasses.collectAs({|c| 
+				c.asString[4..] -> c.findTestMethods.collectAs({|m| 
+					m.name.asString -> {c.new.runTestMethod(m)}
+					}, Dictionary).add(" run all in this class" -> {c.run} ) 
+			}, Dictionary);
+		allclasses = allclasses.reject{|d| d.size==1}; // err there may be some empty classes hanging around
+		// Hmmmmm, not working?    allclasses.add("...All..." -> Dictionary["Run all" -> {UnitTest.runAll}]); // Contains (runs) UnitTest.runAll
+		
+		StaticText(w, Rect(0,0, 400, 40)).string_("Select a class, then a test method, and press Enter");
+		
+		classlist = ListView(w, Rect(0,40, 200, 600-40)).items_(allclasses.asSortedArray.collect(_[0])).action_{|widg| 
+			methodlist.items_(allclasses.asSortedArray[widg.value][1].asSortedArray.collect(_[0])) 
+		};
+		//nowork: classlist.enterKeyAction_{|widg|  methodlist.valueAction_(0)};
+		
+		methodlist = ListView(w, Rect(200,40, 200, 600-40));
+		methodlist.enterKeyAction_{|widg|  allclasses.asSortedArray[classlist.value][1].asSortedArray[widg.value][1].value   };
+		
+		classlist.doAction; // fills in the right-hand column
+		^w.front;
+	}
+	
 
 	// use YourClass.test of TestYourClass.run
 	*run { | reset=true,report=true|
