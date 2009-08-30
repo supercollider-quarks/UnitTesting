@@ -49,7 +49,7 @@ TestUnitTest : UnitTest {
 	}
 	
 	test_findTestedClass {
-		this.assertEquals( TestInstr.findTestedClass,Instr)
+		this.assertEquals( TestMixedBundleTester.findTestedClass, MixedBundleTester)
 	}
 
 

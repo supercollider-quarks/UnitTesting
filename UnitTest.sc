@@ -102,8 +102,33 @@ UnitTest {
 		this.assert( (a - b).abs < within, message + "\nIs:\n\t" + a + "\nShould be:\n\t" + b + "\n", report,onFailure);
 	}
 	assertArrayFloatEquals { |a,b,message="",within=0.0001, report=true,onFailure|
-		this.assert( ((a - b).abs < within).every(_==true), message + "\nIs:\n\t" + a + "\nShould be:\n\t" + b + "\n", report,onFailure);
+		// Check whether all in array meet the condition.
+		// "a" (the first arg) MUST be an array. "b" could be array or scalar.
+		var results, startFrom;
+		results = if(b.isArray){
+			a.collect{|item, index| (item - b[index]).abs < within}
+		}{
+			a.collect{|item, index| (item - b       ).abs < within}
+		};		
+		
+		if(results.any(_==false)){
+			startFrom = results.indexOf(false);
+			// Add failure details:
+			message = message ++ 
+				"\n% of % items in array failed to match. Displaying arrays from index of first failure (%) onwards:\n%\n!=\n%\n"
+				.format(results.count(_==false), results.size, startFrom, a[startFrom..], if(b.isArray){b[startFrom..]}{b});
+			this.failed(currentMethod,message, report);
+			if(onFailure.notNil,{
+				{ onFailure.value }.defer;
+				Error("UnitTest halted with onFailure handler.").throw;
+			});
+			^false
+		}{
+			this.passed(currentMethod,message, report)
+			^true
+		}
 	}
+
 	// make a further assertion only if it passed, or only if it failed
 	ifAsserts { | boolean,message, ifPassedFunc, ifFailedFunc report=true|
 		if(boolean.not,{
