@@ -329,6 +329,9 @@ UnitTest {
 			routine = nil;
 		});
 	}
+	s {
+		^Server.default; // for convenient translation to/from example code
+	}
 }
 
 
