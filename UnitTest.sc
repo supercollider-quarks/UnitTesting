@@ -99,16 +99,16 @@ UnitTest {
 		this.assert( a == b, message + "\nIs:\n\t" + a + "\nShould be:\n\t" + b + "\n", report,onFailure)
 	}
 	assertFloatEquals { |a,b,message="",within=0.0001, report=true,onFailure|
-		this.assert( (a - b).abs < within, message + "\nIs:\n\t" + a + "\nShould be:\n\t" + b + "\n", report,onFailure);
+		this.assert( (a - b).abs <= within, message + "\nIs:\n\t" + a + "\nShould be:\n\t" + b + "\n", report,onFailure);
 	}
 	assertArrayFloatEquals { |a,b,message="",within=0.0001, report=true,onFailure|
 		// Check whether all in array meet the condition.
 		// "a" (the first arg) MUST be an array. "b" could be array or scalar.
 		var results, startFrom;
 		results = if(b.isArray){
-			a.collect{|item, index| (item - b[index]).abs < within}
+			a.collect{|item, index| (item - b[index]).abs <= within}
 		}{
-			a.collect{|item, index| (item - b       ).abs < within}
+			a.collect{|item, index| (item - b       ).abs <= within}
 		};		
 		
 		if(results.any(_==false)){
