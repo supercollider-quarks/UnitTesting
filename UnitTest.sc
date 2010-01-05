@@ -3,10 +3,29 @@
 UnitTest {
 
 	var currentMethod;
-	classvar  <failures,<passes,routine,<>reportPasses = true;
+	classvar <failures, <passes, routine, <>reportPasses = true;
+	classvar <allTestClasses;
+	
+	*findTestClasses {
+		allTestClasses = UnitTest.allSubclasses.collectAs({ |c|
+				var classkey = c.asString[4..]; // drop Meta_
+				var methtests = c.findTestMethods.collectAs({|m|
+									m.name.asString -> { c.new.runTestMethod(m) }
+								}, Dictionary);
+				methtests.add(" run all in this class" -> { c.run });
+				classkey -> methtests;
+			}, Dictionary);
+		// err there may be some empty classes hanging around
+		allTestClasses = allTestClasses.reject{|d| d.size == 1 }; 
+		allTestClasses.add("...All..." -> Dictionary["Run all" -> { UnitTest.runAll }]);
+		//allTestClasses.add("...All..." -> 
+		//	Dictionary["Run all" -> { "not yet implemented".postln; }]);
+
+	}	
 
 	// called before each test
 	setUp {}
+	
 	// called after each test
 	tearDown {}
 
@@ -14,114 +33,136 @@ UnitTest {
 	//test_writeYourTests {}
 
 	// UnitTest.gui
+	
 	*gui {
+		
 		// UnitTest GUI written by Dan Stowell 2009.
-		var w, allclasses, classlist, methodlist;
+		var w, classlist, methodlist;
+		
+		this.findTestClasses;
+		
 		w = Window.new("[UnitTest GUI]", Rect(100, 100, 400, 600));
-		allclasses = UnitTest.allSubclasses.collectAs({|c| 
-				c.asString[4..] -> c.findTestMethods.collectAs({|m| 
-					m.name.asString -> {c.new.runTestMethod(m)}
-					}, Dictionary).add(" run all in this class" -> {c.run} ) 
-			}, Dictionary);
-		allclasses = allclasses.reject{|d| d.size==1}; // err there may be some empty classes hanging around
-		// Hmmmmm, not working?    allclasses.add("...All..." -> Dictionary["Run all" -> {UnitTest.runAll}]); // Contains (runs) UnitTest.runAll
 		
-		StaticText(w, Rect(0,0, 400, 40)).string_("Select a class, then a test method, and press Enter");
+		StaticText(w, Rect(0,0, 400, 40))
+			.string_("Select a class, then a test method, and press Enter");
 		
-		classlist = ListView(w, Rect(0,40, 200, 600-40)).items_(allclasses.asSortedArray.collect(_[0])).action_{|widg| 
-			methodlist.items_(allclasses.asSortedArray[widg.value][1].asSortedArray.collect(_[0])) 
-		};
-		//nowork: classlist.enterKeyAction_{|widg|  methodlist.valueAction_(0)};
+		classlist = ListView(w, Rect(0,40, 200, 600-40))
+			.items_(allTestClasses.asSortedArray.collect(_[0]))
+			.action_{|widg| 
+				methodlist.items_(
+					allTestClasses.asSortedArray[widg.value][1].asSortedArray.collect(_[0])
+				) 
+			};
+			
+		// nowork: classlist.enterKeyAction_{|widg| methodlist.valueAction_(0)};
 		
 		methodlist = ListView(w, Rect(200,40, 200, 600-40));
-		methodlist.enterKeyAction_{|widg|  allclasses.asSortedArray[classlist.value][1].asSortedArray[widg.value][1].value   };
+		methodlist.enterKeyAction_ {|widg|
+			allTestClasses.asSortedArray[classlist.value][1].asSortedArray[widg.value][1].value
+		};
 		
 		classlist.doAction; // fills in the right-hand column
 		^w.front;
-	}
 	
+	}
+		
 
 	// use YourClass.test of TestYourClass.run
-	*run { | reset=true,report=true|
+	*run { | reset = true,report = true|
 		this.new.run(reset,report);
 	}
+	
 	// run all UnitTest subclasses
+	// Hmmmmm, not working?
+	
 	*runAll {
-		routine = Routine({
+		this.forkIfNeeded {
 			this.reset;
 			this.allSubclasses.do ({ |testClass|
 				testClass.run(false,false);
 				0.1.wait;
 			});
 			this.report;
-		}).play(AppClock)
+		}
 	}
-	*runTest { arg methodName;
+	
+	*runTest { | methodName |
 		// "TestPolyPlayerPool:test_prepareChildrenToBundle"
 		var class,method,unitTest;
-		# class,method = methodName.split($:);
+		# class, method = methodName.split($:);
 		class = class.asSymbol.asClass;
 		method.asSymbol;
 		method = class.findMethod(method.asSymbol);
 		if(method.isNil,{ Error("Test method not found "+methodName).throw });
 		class.new.runTestMethod(method);
 	}
-	runTestMethod { arg method;
+	
+	runTestMethod { | method |
 		var function;
 		("RUNNING UNIT TEST" + this.class.name ++ ":" ++ method.name).inform;
-		function = {
+		this.class.forkIfNeeded {
 			this.setUp;
 			currentMethod = method;
 			this.perform(method.name);
 			this.tearDown;
 			this.class.report;
 			nil
-		};
-		routine = Routine(function);
-		routine.play(AppClock)
+		}
 	}
 
 	// call these in your test_ methods to check conditions
 	// and pass or fail
-	assert { | boolean,message, report=true,onFailure|
-		if(boolean.not,{
+	assert { | boolean, message, report = true, onFailure |
+		if(boolean.not) {
 			this.failed(currentMethod,message, report);
-			if(onFailure.notNil,{
+			if(onFailure.notNil) {
 				{ onFailure.value }.defer;
 				Error("UnitTest halted with onFailure handler.").throw;
-			});
-		},{
+			};
+		} {
 			this.passed(currentMethod,message, report)
-		});
+		};
 		^boolean
 	}
-	assertEquals { |a,b,message="", report=true,onFailure|
-		this.assert( a == b, message + "\nIs:\n\t" + a + "\nShould be:\n\t" + b + "\n", report,onFailure)
+	
+	assertEquals { |a, b, message = "", report = true, onFailure |
+		this.assert( a == b, message + "\nIs:\n\t" + a + "\nShould be:\n\t" + b + "\n", report, onFailure)
 	}
-	assertFloatEquals { |a,b,message="",within=0.0001, report=true,onFailure|
-		this.assert( (a - b).abs <= within, message + "\nIs:\n\t" + a + "\nShould be:\n\t" + b + "\n", report,onFailure);
+	
+	assertFloatEquals { |a, b, message = "", within = 0.0001, report = true, onFailure|
+		this.assert( (a - b).abs <= within, 
+			message + "\nIs:\n\t" + a + "\nShould be:\n\t" + b + "\n", report, onFailure);
 	}
-	assertArrayFloatEquals { |a,b,message="",within=0.0001, report=true,onFailure|
+	
+	assertArrayFloatEquals { |a, b, message = "", within = 0.0001, report = true, onFailure|
 		// Check whether all in array meet the condition.
 		// "a" (the first arg) MUST be an array. "b" could be array or scalar.
 		var results, startFrom;
 		results = if(b.isArray){
 			a.collect{|item, index| (item - b[index]).abs <= within}
 		}{
-			a.collect{|item, index| (item - b       ).abs <= within}
-		};		
+			a.collect{|item, index| (item - b).abs <= within}
+		};
 		
-		if(results.any(_==false)){
+		if(results.any(_ == false)){
 			startFrom = results.indexOf(false);
 			// Add failure details:
 			message = message ++ 
-				"\n% of % items in array failed to match. Displaying arrays from index of first failure (%) onwards:\n%\n!=\n%\n"
-				.format(results.count(_==false), results.size, startFrom, a[startFrom..], if(b.isArray){b[startFrom..]}{b});
+				"\n% of % items in array failed to match."
+				" Displaying arrays from index of first failure"
+				" (%) onwards:\n%\n! = \n%\n"
+				.format(
+					results.count(_ == false), 
+					results.size, 
+					startFrom, 
+					a[startFrom..], 
+					if(b.isArray) { b[startFrom..] }{ b }
+				);
 			this.failed(currentMethod,message, report);
-			if(onFailure.notNil,{
+			if(onFailure.notNil) {
 				{ onFailure.value }.defer;
 				Error("UnitTest halted with onFailure handler.").throw;
-			});
+			};
 			^false
 		}{
 			this.passed(currentMethod,message, report)
@@ -130,7 +171,7 @@ UnitTest {
 	}
 
 	// make a further assertion only if it passed, or only if it failed
-	ifAsserts { | boolean,message, ifPassedFunc, ifFailedFunc report=true|
+	ifAsserts { | boolean, message, ifPassedFunc, ifFailedFunc, report = true|
 		if(boolean.not,{
 			this.failed(currentMethod,message, report);
 			ifFailedFunc.value;
@@ -142,7 +183,7 @@ UnitTest {
 	}
 	// waits for condition with a maxTime limit
 		// if time expires, the test is a failure
-	wait { |condition,failureMessage,maxTime = 10.0|
+	wait { |condition, failureMessage, maxTime = 10.0|
 		var limit;
 		limit = maxTime / 0.05;
 		while({
@@ -157,24 +198,24 @@ UnitTest {
 	}
 
 	// wait is better
-	asynchAssert { |waitConditionBlock, testBlock,timeoutMessage="",timeout = 10|
+	asynchAssert { |waitConditionBlock, testBlock, timeoutMessage = "", timeout = 10|
 		var limit;
 		limit = timeout / 0.1;
-		while({
+		while {
 			waitConditionBlock.value.not and:
-			 {(limit = limit - 1) > 0}
-		},{
+			 { (limit = limit - 1) > 0 }
+		} {
 			0.1.wait;
-		});
-		if(limit == 0,{
+		};
+		if(limit == 0) {
 			this.failed(currentMethod,"Timeout:" + timeoutMessage)
-		},{
+		} {
 			testBlock.value
-		});
+		};
 	}
 
 	// if already booted, then freeAll and create new allocators
-	bootServer { arg server;
+	bootServer { | server |
 		server = server ? Server.default;
 		if(server.serverRunning.not,{
 			server.bootSync(Condition.new)
@@ -184,7 +225,7 @@ UnitTest {
 		server.newAllocators; // new nodes, busses regardless
 	}
 
-	failed { arg method,message, report=true;
+	failed { | method, message, report = true |
 		var r;
 		failures = failures.add(r = UnitTestResult(this,method,message));
 		if(report){
@@ -193,7 +234,7 @@ UnitTest {
 			Post << Char.nl;
 		};
 	}
-	passed { arg method,message, report=true;
+	passed { | method, message, report = true |
 		var r;
 		passes = passes.add(r = UnitTestResult(this,method,message));
 		if(report and: reportPasses){
@@ -205,7 +246,8 @@ UnitTest {
 	// these are mostly private
 	// don't use this directly,
 	// use Class.test or TestClass.run
-	*runTestClassForClass { arg class, reset=true, report=true;
+	
+	*runTestClassForClass { | class, reset = true, report = true |
 		var testClass;
 		if(class.isNil,{
 			"No class supplied for testing".die;
@@ -223,7 +265,7 @@ UnitTest {
 		testClass.run(reset,report)
 	}
 
-	*findTestClass { arg forClass;
+	*findTestClass { | forClass |
 		^("Test" ++ forClass.name.asString).asSymbol.asClass
 	}
 
@@ -240,22 +282,15 @@ UnitTest {
 			"There were no failures".inform;
 		})
 	}
-	*initClass {
-		CmdPeriod.add(this);
-	}
-	*cmdPeriod {
-		if(routine.notNil,{
-			routine.stop;
-			routine = nil;
-		});
-	}
-	// private.  use YourClass.test or TestYourClass.run
-	run { | reset=true,report=true|
+	
+	// private. use YourClass.test or TestYourClass.run
+	
+	run { | reset = true, report = true|
 		var function;
-		if(reset,{ this.class.reset });
-		if(report,{ ("RUNNING UNIT TEST" + this).inform });
-		function = {
-			this.findTestMethods.do({ arg method;
+		if(reset) { this.class.reset };
+		if(report) { ("RUNNING UNIT TEST" + this).inform };
+		this.class.forkIfNeeded {
+			this.findTestMethods.do { |method|
 				this.setUp;
 				currentMethod = method;
 				//{
@@ -267,18 +302,21 @@ UnitTest {
 				//});
 
 				this.tearDown;
-			});
-			if(report,{ this.class.report });
+			};
+			if(report) { this.class.report };
 			nil
 		};
-		if(routine.notNil,{ // we are inside the Routine already
-			// can we prove it ?
+		
+	}
+	
+	*forkIfNeeded { |function|
+		if(thisThread.isKindOf(Routine),{ // we are inside the Routine already
 			function.value
-		},{
-			routine = Routine(function);
-			routine.play(AppClock)
+		}, {
+			Routine(function).play(AppClock)
 		})
 	}
+	
 	// returns the methods named test_
 	findTestMethods {
 		^this.class.findTestMethods
@@ -288,10 +326,10 @@ UnitTest {
 			m.name.asString.copyRange(0,4) == "test_"
 		})
 	}
-	*classesWithTests { arg package='Common';
+	*classesWithTests { | package = 'Common'|
 		^Quarks.classesInPackage(package).select({ |c| UnitTest.findTestClass(c).notNil })
 	}
-	*classesWithoutTests { arg package='Common';
+	*classesWithoutTests { |package = 'Common'|
 		^Quarks.classesInPackage(package).difference( UnitTest.classesWithTests(package) );
 	}
 
@@ -311,7 +349,7 @@ UnitTest {
 		if(testedMethods.isNil or: {testedMethods.isEmpty},{
 			untestedMethods = testedClass.methods;
 		},{
-			untestedMethods =
+			untestedMethods = 
 				testedClass.methods.select({ |meth| testedMethods.includes(meth).not });
 		});
 		// reject getters,setters, empty methods
@@ -324,10 +362,7 @@ UnitTest {
 	// private
 	*reset {
 		failures = [];
-		if(routine.notNil,{
-			routine.stop;
-			routine = nil;
-		});
+		routine.stop;
 	}
 	s {
 		^Server.default; // for convenient translation to/from example code
@@ -340,7 +375,7 @@ UnitTest {
 
 UnitTestResult {
 	var <testClass,<testMethod,<message;
-	*new { arg testClass,testMethod="",message="";
+	*new { arg testClass,testMethod = "",message = "";
 		^super.newCopyArgs(testClass,testMethod,message)
 	}
 	report {
@@ -349,3 +384,101 @@ UnitTestResult {
 }
 
 
+// scripts may be located next to the class or one folder below
+// they should have a unique name and end with "_unittest.scd"
+// the scripts are listed under this test class: UnitTestScript
+
+// UnitTestScript mimics the behavior of Method, 
+// in order to sneak into the anthill without getting eaten
+
+UnitTestScript : UnitTest {
+
+	var <>name, <>path;
+	
+	classvar <allScripts;
+	classvar fileEnd = "_unittest.scd";
+	classvar scriptDict;
+	
+	
+	*new { |name, path|
+		^super.new.init(name, path)
+	}
+	
+	init { |argName, argPath|
+		name = argName;
+		path = argPath;
+	}
+	
+	*initClass {
+		scriptDict = ();
+	}
+	
+	*runTest { | scriptName |
+		var script;
+		allScripts ?? { this.findTestScripts };
+		script = allScripts[scriptName.asSymbol];
+		if(script.isNil) { ("UnitTestScript: script not found: "+ scriptName ).warn } {
+			script.runScript
+		}
+	}
+	
+	*findTestScripts {
+		var classPaths;
+		var func = { |path|
+			var scriptPaths,fileNames, scriptNames;
+			scriptPaths = pathMatch(path ++"/*" ++ fileEnd);
+			scriptPaths = scriptPaths ++ pathMatch(path ++"/*/*" ++ fileEnd);
+			scriptPaths = scriptPaths.as(Set).as(Array); // remove duplicates
+			fileNames = scriptPaths.collect(_.basename);
+			scriptNames = fileNames.collect { |x| x.replace(fileEnd, "").asSymbol };
+			scriptNames.do { |name, i|
+				var oldPath = scriptDict.at(name);
+				if(oldPath.notNil and: { oldPath != scriptPaths[i] }) { 
+					Error(
+						"duplicate script name:\n%\n%\n\npath:%\n\n"
+						.format(scriptPaths[i], scriptDict[name], path)
+					);
+				};
+				scriptDict.put(name, scriptPaths[i]);
+				if(oldPath.notNil) { allScripts.add(this.new(name, scriptPaths[i])) };
+			};
+		};
+	
+		classPaths = Class.allClasses
+			.collectAs({ |class| class.filenameSymbol.asString.dirname }, Set);
+		allScripts = List.new;
+		classPaths.do(func);
+		
+	}
+	
+	*findTestMethods {
+		this.findTestScripts;
+		^allScripts
+	}
+	
+	runTestMethod { |testScript|
+			
+		testScript.runScript;
+		
+	}
+	
+	runScript {
+		("RUNNING UNIT TEST SCRIPT" + name ++ " path:" ++ path ++ "\n\n").inform;
+		this.class.forkIfNeeded {
+			currentMethod = this;
+			path.load.value(this);
+			this.class.report;
+			nil
+		}
+	}
+	
+	run {
+		allScripts ?? { this.class.findTestScripts };
+		Routine {
+			allScripts.do { |testScript|
+				this.runTestMethod(testScript)
+			}
+		}.play(AppClock);
+	}
+
+}
