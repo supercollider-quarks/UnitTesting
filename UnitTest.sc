@@ -16,10 +16,8 @@ UnitTest {
 				classkey -> methtests;
 			}, Dictionary);
 		// err there may be some empty classes hanging around
-		allTestClasses = allTestClasses.reject{|d| d.size == 1 }; 
+		allTestClasses = allTestClasses.reject {|d| d.size == 1 }; 
 		allTestClasses.add("...All..." -> Dictionary["Run all" -> { UnitTest.runAll }]);
-		//allTestClasses.add("...All..." -> 
-		//	Dictionary["Run all" -> { "not yet implemented".postln; }]);
 
 	}	
 
@@ -28,11 +26,49 @@ UnitTest {
 	
 	// called after each test
 	tearDown {}
+			
 
-	// all methods named test_ will be run
-	//test_writeYourTests {}
-
-	// UnitTest.gui
+	// use YourClass.test of TestYourClass.run
+	*run { | reset = true, report = true|
+		this.new.run(reset, report);
+	}
+	
+	// run all UnitTest subclasses	
+	*runAll {
+		this.forkIfNeeded {
+			this.reset;
+			this.allSubclasses.do ({ |testClass|
+				testClass.run(false,false);
+				0.1.wait;
+			});
+			this.report;
+		}
+	}
+	
+	// run a single test in the name format "TestPolyPlayerPool:test_prepareChildrenToBundle"
+	*runTest { | methodName | 
+		var class, method, unitTest;
+		# class, method = methodName.split($:);
+		class = class.asSymbol.asClass;
+		method.asSymbol;
+		method = class.findMethod(method.asSymbol);
+		if(method.isNil) { Error("Test method not found "+methodName).throw };
+		class.new.runTestMethod(method);
+	}
+	
+	// run a single test method of this class
+	runTestMethod { | method |
+		var function;
+		("RUNNING UNIT TEST" + this.class.name ++ ":" ++ method.name).inform;
+		this.class.forkIfNeeded {
+			this.setUp;
+			currentMethod = method;
+			this.perform(method.name);
+			this.tearDown;
+			this.class.report;
+			nil
+		}
+	}
 	
 	*gui {
 		
@@ -65,62 +101,21 @@ UnitTest {
 		^w.front;
 	
 	}
-		
 
-	// use YourClass.test of TestYourClass.run
-	*run { | reset = true,report = true|
-		this.new.run(reset,report);
-	}
-	
-	// run all UnitTest subclasses
-	// Hmmmmm, not working?
-	
-	*runAll {
-		this.forkIfNeeded {
-			this.reset;
-			this.allSubclasses.do ({ |testClass|
-				testClass.run(false,false);
-				0.1.wait;
-			});
-			this.report;
-		}
-	}
-	
-	*runTest { | methodName |
-		// "TestPolyPlayerPool:test_prepareChildrenToBundle"
-		var class,method,unitTest;
-		# class, method = methodName.split($:);
-		class = class.asSymbol.asClass;
-		method.asSymbol;
-		method = class.findMethod(method.asSymbol);
-		if(method.isNil,{ Error("Test method not found "+methodName).throw });
-		class.new.runTestMethod(method);
-	}
-	
-	runTestMethod { | method |
-		var function;
-		("RUNNING UNIT TEST" + this.class.name ++ ":" ++ method.name).inform;
-		this.class.forkIfNeeded {
-			this.setUp;
-			currentMethod = method;
-			this.perform(method.name);
-			this.tearDown;
-			this.class.report;
-			nil
-		}
-	}
 
-	// call these in your test_ methods to check conditions
-	// and pass or fail
+
+	///////////////////////////////////////////////////////////////////////
+	// call these in your test_ methods to check conditions and pass or fail
+	
 	assert { | boolean, message, report = true, onFailure |
 		if(boolean.not) {
-			this.failed(currentMethod,message, report);
+			this.failed(currentMethod, message, report);
 			if(onFailure.notNil) {
 				{ onFailure.value }.defer;
 				Error("UnitTest halted with onFailure handler.").throw;
 			};
 		} {
-			this.passed(currentMethod,message, report)
+			this.passed(currentMethod, message, report)
 		};
 		^boolean
 	}
@@ -131,20 +126,20 @@ UnitTest {
 	
 	assertFloatEquals { |a, b, message = "", within = 0.0001, report = true, onFailure|
 		this.assert( (a - b).abs <= within, 
-			message + "\nIs:\n\t" + a + "\nShould be:\n\t" + b + "\n", report, onFailure);
+			message + "\nIs:\n\t" + a + "\nShould equal (within range" + within ++ "):\n\t" + b + "\n", report, onFailure);
 	}
 	
 	assertArrayFloatEquals { |a, b, message = "", within = 0.0001, report = true, onFailure|
 		// Check whether all in array meet the condition.
-		// "a" (the first arg) MUST be an array. "b" could be array or scalar.
 		var results, startFrom;
-		results = if(b.isArray){
-			a.collect{|item, index| (item - b[index]).abs <= within}
+		a = a.asArray;
+		results = if(b.isArray) {
+			a.collect {|item, index| (item - b[index]).abs <= within }
 		}{
-			a.collect{|item, index| (item - b).abs <= within}
+			a.collect {|item, index| (item - b).abs <= within }
 		};
 		
-		if(results.any(_ == false)){
+		if(results.any(_ == false)) {
 			startFrom = results.indexOf(false);
 			// Add failure details:
 			message = message ++ 
@@ -156,7 +151,7 @@ UnitTest {
 					results.size, 
 					startFrom, 
 					a[startFrom..], 
-					if(b.isArray) { b[startFrom..] }{ b }
+					if(b.isArray) { b[startFrom..] } { b }
 				);
 			this.failed(currentMethod,message, report);
 			if(onFailure.notNil) {
@@ -181,8 +176,9 @@ UnitTest {
 		});
 		^boolean
 	}
+	
 	// waits for condition with a maxTime limit
-		// if time expires, the test is a failure
+	// if time expires, the test is a failure
 	wait { |condition, failureMessage, maxTime = 10.0|
 		var limit;
 		limit = maxTime / 0.05;
@@ -215,53 +211,60 @@ UnitTest {
 	}
 
 	// if already booted, then freeAll and create new allocators
+	// if this is called inside a routine, the routine waits until server is booted
+	
 	bootServer { | server |
 		server = server ? Server.default;
-		if(server.serverRunning.not,{
-			server.bootSync(Condition.new)
-		},{
+		if(server.serverRunning.not) {
+			server.bootSync 
+		} {
 			server.freeAll;
-		});
+		};
 		server.newAllocators; // new nodes, busses regardless
 	}
 
+	// call failure directly
 	failed { | method, message, report = true |
-		var r;
-		failures = failures.add(r = UnitTestResult(this,method,message));
+		var r = UnitTestResult(this, method, message);
+		failures = failures.add(r);
 		if(report){
 			Post << Char.nl << "FAIL:";
 			r.report;
 			Post << Char.nl;
 		};
 	}
+	
+	// call pass directly
 	passed { | method, message, report = true |
-		var r;
-		passes = passes.add(r = UnitTestResult(this,method,message));
-		if(report and: reportPasses){
+		var r = UnitTestResult(this, method, message);
+		passes = passes.add(r);
+		if(report and: reportPasses) {
 			Post << "PASS:";
 			r.report;
 		};
 	}
 
+
+	// PRIVATE IMPLEMENTATION
 	// these are mostly private
 	// don't use this directly,
 	// use Class.test or TestClass.run
 	
 	*runTestClassForClass { | class, reset = true, report = true |
 		var testClass;
-		if(class.isNil,{
+		if(class.isNil) {
 			"No class supplied for testing".die;
-		});
+		};
 		testClass = ("Test" ++ class.name.asString).asSymbol.asClass;
-		if(testClass.isNil,{
+		if(testClass.isNil) {
 			("No test class found for " + class).inform;
 			^this
-		});
-		if(testClass.respondsTo(\run).not,{
+		};
+		if(testClass.respondsTo(\run).not) {
 			("Attempting to run UnitTests on class that is not a subclass of UnitTest"
 				+ testClass).error;
 			^this
-		});
+		};
 		testClass.run(reset,report)
 	}
 
@@ -272,18 +275,18 @@ UnitTest {
 	*report {
 		Post.nl;
 		"UNIT TEST.............".inform;
-		if(failures.size > 0,{
+		if(failures.size > 0) {
 			"There were failures:".inform;
-			failures.do({ arg results;
+			failures.do { arg results;
 
 				results.report
-			});
-		},{
+			};
+		} {
 			"There were no failures".inform;
-		})
+		}
 	}
 	
-	// private. use YourClass.test or TestYourClass.run
+	// private - use YourClass.test or TestYourClass.run
 	
 	run { | reset = true, report = true|
 		var function;
@@ -310,11 +313,11 @@ UnitTest {
 	}
 	
 	*forkIfNeeded { |function|
-		if(thisThread.isKindOf(Routine),{ // we are inside the Routine already
+		if(thisThread.isKindOf(Routine)) { // we are inside the Routine already
 			function.value
-		}, {
+		} {
 			Routine(function).play(AppClock)
-		})
+		}
 	}
 	
 	// returns the methods named test_
@@ -374,12 +377,16 @@ UnitTest {
 
 
 UnitTestResult {
-	var <testClass,<testMethod,<message;
-	*new { arg testClass,testMethod = "",message = "";
-		^super.newCopyArgs(testClass,testMethod,message)
+	
+	var <testClass, <testMethod, <message;
+	
+	*new { |testClass, testMethod, message = ""|
+		^super.newCopyArgs(testClass ? this, testMethod ? thisMethod, message)
 	}
+	
 	report {
-		Post << testClass.asString << ":" << testMethod.name << " " << message << Char.nl;
+		var name = if(testMethod.notNil) { testMethod.name } { "unit test result" };
+		Post << testClass.asString << ":" << name << " - " << message << Char.nl;
 	}
 }
 

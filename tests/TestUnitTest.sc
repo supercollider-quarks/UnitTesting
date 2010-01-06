@@ -43,10 +43,6 @@ TestUnitTest : UnitTest {
 			}, "assert asynch should have triggered the server to boot and then run the test block");
 	}
 */	
-	test_cmdPeriod {
-		// can't call it here though
-		this.assert( UnitTest.respondsTo(\cmdPeriod),"should have cmdPeriod implemented")
-	}
 	
 	test_findTestedClass {
 		this.assertEquals( TestMixedBundleTester.findTestedClass, MixedBundleTester)
@@ -57,7 +53,7 @@ TestUnitTest : UnitTest {
 
 	/*** IF YOU ADD MORE TESTS, UPDATE THE numTestMethods var ***/
 	test_findTestMethods {
-		var numTestMethods = 8;
+		var numTestMethods = 7;
 		this.assert( this.findTestMethods.size == numTestMethods, "should be " + numTestMethods + " test methods");
 	}
 }

@@ -9,21 +9,33 @@
 <style type="text/css">
 p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
 p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Lucida Grande'; min-height: 15.0px}
-p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #0000bf}
-p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Helvetica; min-height: 17.0px}
+p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 16.0px Helvetica}
+p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Lucida Grande'; min-height: 15.0px}
+p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #0000bf}
 p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; min-height: 12.0px}
-p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #0000bf; min-height: 12.0px}
-p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #cd1612}
-p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Helvetica}
-p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco}
-p.p11 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #bf0000}
-p.p12 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #606060}
+p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #000000}
+p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #737373}
+p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco}
+p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #0b28c6}
+p.p11 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Helvetica; min-height: 17.0px}
+p.p12 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #000000; min-height: 12.0px}
+p.p13 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #0000bf; min-height: 12.0px}
+p.p14 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #0a26c0; min-height: 12.0px}
+p.p15 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #cd1612; min-height: 12.0px}
+p.p16 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Helvetica}
+p.p17 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #bf0000}
+p.p18 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #606060}
 span.s1 {font: 18.0px Helvetica}
 span.s2 {color: #0000bf}
 span.s3 {color: #000000}
-span.s4 {color: #bf0000}
-span.s5 {color: #606060}
+span.s4 {font: 12.0px Helvetica}
+span.s5 {color: #0b28c6}
+span.s6 {color: #0b28c5}
+span.s7 {font: 12.0px Helvetica; color: #000000}
+span.s8 {color: #00831b}
+span.s9 {color: #737373}
+span.s10 {color: #bf0000}
+span.s11 {color: #606060}
 span.Apple-tab-span {white-space:pre}
 </style>
 </head>
@@ -38,17 +50,42 @@ span.Apple-tab-span {white-space:pre}
 <p class="p1">see also: <a href="UnitTestScript.html"><span class="s2">UnitTestScript</span></a> (tests independent of classes).</p>
 <p class="p2"><br></p>
 <p class="p2"><br></p>
+<p class="p3"><b>Running tests</b></p>
+<p class="p2"><br></p>
 <p class="p1"><b>*gui<span class="Apple-converted-space"> </span></b></p>
 <p class="p1"><span class="Apple-tab-span">	</span>For a graphical interface to all tests, run this line:</p>
-<p class="p3"><br></p>
-<p class="p4"><span class="Apple-tab-span">	</span>UnitTest<span class="s3">.gui</span></p>
+<p class="p4"><br></p>
+<p class="p5"><span class="Apple-tab-span">	</span>UnitTest<span class="s3">.gui</span></p>
+<p class="p6"><span class="Apple-tab-span">	</span></p>
+<p class="p1"><b>*runTest(methiodName)</b></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-tab-span">	</span>Run a single test in the name format "TestPolyPlayerPool:test_prepareChildrenToBundle"</p>
+<p class="p2"><span class="Apple-tab-span">	</span></p>
+<p class="p7"><span class="s4"><span class="Apple-tab-span">	</span></span><span class="s5">UnitTest</span>.reset;<span class="Apple-converted-space"> </span></p>
+<p class="p8"><span class="s3"><span class="Apple-tab-span">	</span></span><span class="s5">UnitTest</span><span class="s3">.runTest(</span>"TestUnitTest:test_assert"<span class="s3">);</span></p>
 <p class="p2"><br></p>
 <p class="p1"><b>*runAll</b></p>
 <p class="p2"><br></p>
 <p class="p1"><span class="Apple-tab-span">	</span>runs all subclasses of UnitTest</p>
 <p class="p2"><span class="Apple-tab-span">	</span></p>
+<p class="p9"><span class="s4"><span class="Apple-tab-span">	</span></span><span class="s6">UnitTest</span>.reset;<span class="Apple-converted-space"> </span></p>
+<p class="p9"><span class="Apple-tab-span">	</span><span class="s6">UnitTest</span>.runAll;</p>
+<p class="p2"><span class="Apple-tab-span">	</span></p>
+<p class="p2"><b></b><br></p>
 <p class="p1"><b>run</b></p>
 <p class="p1"><span class="Apple-tab-span">	</span>All method names that start with <b>test_</b> are invoked.<span class="Apple-converted-space"> </span></p>
+<p class="p10"><span class="s7"><span class="Apple-tab-span">	</span></span>TestUnitTest<span class="s3">.new.run;</span></p>
+<p class="p2"><br></p>
+<p class="p2"><span class="Apple-tab-span">	</span></p>
+<p class="p1"><b>runTestMethod(method)</b></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-tab-span">	</span>Run a single test method of this class</p>
+<p class="p7"><span class="s4"><span class="Apple-tab-span">	</span></span><span class="s5">TestUnitTest</span>.new.runTestMethod(<span class="s5">TestUnitTest</span>.findMethod(<span class="s8">\test_assert</span>));</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p3"><b>Writing tests by subclassing UnitTest</b></p>
 <p class="p2"><br></p>
 <p class="p2"><br></p>
 <p class="p1"><b>YourClass.test</b></p>
@@ -59,64 +96,137 @@ span.Apple-tab-span {white-space:pre}
 <p class="p2"><br></p>
 <p class="p1"><span class="Apple-tab-span">	</span>UnitTests for Common library classes are kept in the CommonTests quark.</p>
 <p class="p1"><span class="Apple-tab-span">	</span>This enables you to easily install and uninstall these tests.</p>
-<p class="p5"><br></p>
+<p class="p11"><br></p>
+<p class="p11"><br></p>
+<p class="p1"><b>setUp / tearDown</b></p>
+<p class="p1"><span class="Apple-tab-span">	</span>Implement these methods in a subclass, to be called before and after a test.</p>
 <p class="p2"><br></p>
-<p class="p1"><b>assert(test, comment, report, onFailure )</b></p>
+<p class="p2"><br></p>
+<p class="p1"><b>assert(test, message, report, onFailure)</b></p>
 <p class="p2"><span class="Apple-tab-span">	</span></p>
-<p class="p1"><span class="Apple-tab-span">	</span>Make sure that the test returns true. Post the comment if report is true.</p>
+<p class="p1"><span class="Apple-tab-span">	</span>Make sure that the <b>test</b> returns true. Post the <b>message</b> if <b>report</b> is true.<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-tab-span">	</span>If <b>onFailure</b> is not nil, a failure stops the tests and evaluates this function.</p>
+<p class="p2"><span class="Apple-tab-span">	</span></p>
+<p class="p7"><span class="Apple-tab-span">	</span><span class="s5">UnitTest</span>.new.assert(2 == 2, <span class="s9">"Two does equal two."</span>);</p>
+<p class="p7"><span class="Apple-tab-span">	</span><span class="s5">UnitTest</span>.new.assert(2 == 2.00001, <span class="s9">"Two does equal two."</span>);</p>
+<p class="p6"><br></p>
 <p class="p6"><br></p>
 <p class="p6"><span class="Apple-converted-space"> </span></p>
-<p class="p1"><b>assertEquals(a, b, comment, report, onFailure )</b></p>
+<p class="p1"><b>assertEquals(a, b, message, report, onFailure)</b></p>
 <p class="p2"><span class="Apple-tab-span">	</span></p>
-<p class="p1"><span class="Apple-tab-span">	</span>Make sure that a equals b. Post the comment.</p>
-<p class="p7"><br></p>
-<p class="p7"><br></p>
-<p class="p8">// todo: document more methods.</p>
-<p class="p7"><br></p>
-<p class="p3"><br></p>
-<p class="p9"><b>Writing Unit tests</b></p>
+<p class="p1"><span class="Apple-tab-span">	</span>Make sure that a equals b.<span class="Apple-converted-space">  </span>Post the <b>message</b> if <b>report</b> is true.<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-tab-span">	</span>If <b>onFailure</b> is not nil, a failure stops the tests and evaluates this function.</p>
+<p class="p2"><span class="Apple-tab-span">	</span></p>
+<p class="p7"><span class="s4"><span class="Apple-tab-span">	</span></span><span class="s5">UnitTest</span>.new.assertEquals(2, 2, <span class="s9">"Two does equal two."</span>);</p>
+<p class="p7"><span class="s4"><span class="Apple-tab-span">	</span></span><span class="s5">UnitTest</span>.new.assertEquals(2, 2.00001, <span class="s9">"Two does equal two."</span>);</p>
+<p class="p2"><br></p>
+<p class="p1"><b>assertFloatEquals(a, b, message, within, report, onFailure)</b></p>
+<p class="p2"><span class="Apple-tab-span">	</span></p>
+<p class="p1"><span class="Apple-tab-span">	</span>Make sure that the two floats a and b equal within a given range<b> (within)</b>.<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-tab-span">	</span>Post the <b>message</b> if <b>report</b> is true.<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-tab-span">	</span>If <b>onFailure</b> is not nil, a failure stops the tests and evaluates this function.</p>
+<p class="p2"><span class="Apple-tab-span">	</span></p>
+<p class="p7"><span class="s7"><span class="Apple-tab-span">	</span></span><span class="s5">UnitTest</span>.new.assertFloatEquals(2, 2.00001, <span class="s9">"Two does equal two."</span>, 0.00001);</p>
+<p class="p7"><span class="s4"><span class="Apple-tab-span">	</span></span><span class="s5">UnitTest</span>.new.assertFloatEquals(2, 2.001, <span class="s9">"Two does equal two."</span>, 0.0001);</p>
+<p class="p12"><br></p>
+<p class="p1"><b>assertArrayFloatEquals(a, b, message, within, report, onFailure)</b></p>
+<p class="p2"><span class="Apple-tab-span">	</span></p>
+<p class="p1"><span class="Apple-tab-span">	</span>Make sure that the two arrays of floats a and b equal within a given range<b> (within)</b>.<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-tab-span">	</span>Post the <b>message</b> if <b>report</b> is true.<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-tab-span">	</span>If <b>onFailure</b> is not nil, a failure stops the tests and evaluates this function.</p>
+<p class="p2"><span class="Apple-tab-span">	</span></p>
+<p class="p9"><span class="s4"><span class="Apple-tab-span">	</span></span><span class="s6">UnitTest</span>.new.assertArrayFloatEquals([2, 3], [2, 3] + 0.00001, <span class="s9">"Same Floats"</span>, 0.000001);</p>
+<p class="p13"><br></p>
+<p class="p1"><b>ifAsserts(boolean, message, ifPassedFunc, ifFailedFunc, report)</b></p>
+<p class="p2"><span class="Apple-tab-span">	</span></p>
+<p class="p1"><span class="Apple-tab-span">	</span>Make a further assertion only if it passed, or only if it failed.</p>
+<p class="p2"><span class="Apple-tab-span">	</span></p>
+<p class="p7"><span class="s7"><span class="Apple-tab-span">	</span></span>(</p>
+<p class="p7"><span class="Apple-tab-span">	</span>a = <span class="s5">UnitTest</span>.new;</p>
+<p class="p7"><span class="Apple-tab-span">	</span>a.ifAsserts(2 == 3, <span class="s9">"yes"</span>, { a.assert(2 == 4) }, { a.assert(1 == 1, <span class="s9">"but this is correct"</span>) });</p>
+<p class="p7"><span class="Apple-tab-span">	</span>)</p>
+<p class="p12"><span class="Apple-tab-span">	</span></p>
+<p class="p1"><b>wait(condition, failureMessage, maxTime)</b></p>
+<p class="p2"><span class="Apple-tab-span">	</span></p>
+<p class="p1"><span class="Apple-tab-span">	</span>Wait for a <b>condition</b>, consider failed after <b>maxTime. </b>Only valid within a test (or a routine)</p>
+<p class="p2"><span class="Apple-tab-span">	</span></p>
+<p class="p9"><span class="s4"><span class="Apple-tab-span">	</span></span>(</p>
+<p class="p7"><span class="Apple-tab-span">	</span>{</p>
+<p class="p7"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>s.reboot;</p>
+<p class="p7"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="s5">UnitTest</span>.new.wait(s.serverRunning, <span class="s9">"server failed to boot in time"</span>, 2);</p>
+<p class="p7"><span class="Apple-tab-span">	</span>}.fork</p>
+<p class="p9"><span class="s3"><span class="Apple-tab-span">	</span></span>)</p>
+<p class="p6"><span class="Apple-tab-span">	</span></p>
+<p class="p1"><b>bootServer(server)</b></p>
+<p class="p2"><span class="Apple-tab-span">	</span></p>
+<p class="p1"><span class="Apple-tab-span">	</span>Wait for server boot until continued. Only valid within a test (or a routine).</p>
+<p class="p1"><span class="Apple-tab-span">	</span>If already booted, then freeAll and create new allocators</p>
+<p class="p2"><span class="Apple-tab-span">	</span></p>
+<p class="p9"><span class="s4"><span class="Apple-tab-span">	</span></span>(</p>
+<p class="p9"><span class="Apple-tab-span">	</span>{</p>
+<p class="p9"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="s6">UnitTest</span>.new.bootServer(s);</p>
+<p class="p9"><span class="Apple-tab-span">	</span>}.fork</p>
+<p class="p9"><span class="Apple-tab-span">	</span>)</p>
+<p class="p14"><br></p>
+<p class="p1"><b>failed(method, message, report)</b></p>
+<p class="p2"><span class="Apple-tab-span">	</span></p>
+<p class="p1"><span class="Apple-tab-span">	</span>call failure directly.</p>
+<p class="p2"><span class="Apple-tab-span">	</span></p>
+<p class="p7"><span class="s4"><span class="Apple-tab-span">	</span></span><span class="s5">UnitTest</span>.new.failed(message: <span class="s9">"this failed"</span>);</p>
+<p class="p6"><span class="Apple-tab-span">	</span></p>
+<p class="p13"><br></p>
+<p class="p1"><b>passed(method, message, report)</b></p>
+<p class="p2"><span class="Apple-tab-span">	</span></p>
+<p class="p1"><span class="Apple-tab-span">	</span>call failure directly.</p>
+<p class="p2"><span class="Apple-tab-span">	</span></p>
+<p class="p9"><span class="s4"><span class="Apple-tab-span">	</span></span><span class="s6">UnitTest</span>.new.passed(message: <span class="s9">"this passed"</span>);</p>
+<p class="p6"><span class="Apple-tab-span">	</span></p>
+<p class="p15"><br></p>
+<p class="p13"><br></p>
+<p class="p4"><br></p>
+<p class="p16"><b>Example for a UnitTest class</b></p>
 <p class="p6"><br></p>
-<p class="p4"><span class="Apple-tab-span">	</span>TestYourClass<span class="s3"> : </span>UnitTest<span class="s3"> {</span></p>
-<p class="p7"><span class="Apple-tab-span">	</span></p>
-<p class="p10"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>setUp {</p>
-<p class="p11"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>// this will be called before each test</p>
-<p class="p10"><span class="s4"><span class="Apple-tab-span">	</span></span><span class="Apple-tab-span">	</span>}</p>
-<p class="p10"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>tearDown {</p>
-<p class="p11"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>// this will be called after each test</p>
-<p class="p10"><span class="s4"><span class="Apple-tab-span">	</span></span><span class="Apple-tab-span">	</span>}</p>
+<p class="p5"><span class="Apple-tab-span">	</span>TestYourClass<span class="s3"> : </span>UnitTest<span class="s3"> {</span></p>
+<p class="p13"><span class="Apple-tab-span">	</span></p>
+<p class="p9"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>setUp {</p>
+<p class="p17"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>// this will be called before each test</p>
+<p class="p9"><span class="s10"><span class="Apple-tab-span">	</span></span><span class="Apple-tab-span">	</span>}</p>
+<p class="p9"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>tearDown {</p>
+<p class="p17"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>// this will be called after each test</p>
+<p class="p9"><span class="s10"><span class="Apple-tab-span">	</span></span><span class="Apple-tab-span">	</span>}</p>
 <p class="p6"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space"> </span></p>
-<p class="p10"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>test_yourMethod {</p>
+<p class="p9"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>test_yourMethod {</p>
 <p class="p6"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space"> <span class="Apple-tab-span">	</span></span></p>
-<p class="p11"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// every method named test_</p>
-<p class="p11"><span class="Apple-tab-span">	</span><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// will be run</p>
-<p class="p6"><span class="s4"><span class="Apple-tab-span">	</span></span><span class="Apple-tab-span">	</span><span class="Apple-converted-space"> <span class="Apple-tab-span">	</span></span></p>
-<p class="p10"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span><span class="s2">this</span>.assert( 6 == 6, <span class="s5">"6 should equal 6"</span>);</p>
+<p class="p17"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// every method named test_</p>
+<p class="p17"><span class="Apple-tab-span">	</span><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// will be run</p>
+<p class="p6"><span class="s10"><span class="Apple-tab-span">	</span></span><span class="Apple-tab-span">	</span><span class="Apple-converted-space"> <span class="Apple-tab-span">	</span></span></p>
+<p class="p9"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span><span class="s2">this</span>.assert( 6 == 6, <span class="s11">"6 should equal 6"</span>);</p>
 <p class="p6"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space"> <span class="Apple-tab-span">	</span></span></p>
-<p class="p10"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span><span class="s2">this</span>.assertEquals( 9, 9, <span class="s5">"9 should equal 9"</span>);</p>
+<p class="p9"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span><span class="s2">this</span>.assertEquals( 9, 9, <span class="s11">"9 should equal 9"</span>);</p>
 <p class="p6"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space"> <span class="Apple-tab-span">	</span></span></p>
-<p class="p10"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span><span class="s2">this</span>.assertFloatEquals( 4.0 , 1.0 * 4.0 / 4.0 * 4.0,<span class="Apple-converted-space"> </span></p>
-<p class="p12"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span></span>"floating point math should be close to equal"<span class="s3">);</span></p>
+<p class="p9"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span><span class="s2">this</span>.assertFloatEquals( 4.0 , 1.0 * 4.0 / 4.0 * 4.0,<span class="Apple-converted-space"> </span></p>
+<p class="p18"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span></span>"floating point math should be close to equal"<span class="s3">);</span></p>
 <p class="p6"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space"> </span></p>
-<p class="p11"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// we are inside a Routine, you may wait</p>
-<p class="p10"><span class="s4"><span class="Apple-tab-span">	</span></span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span>1.0.wait;</p>
+<p class="p17"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// we are inside a Routine, you may wait</p>
+<p class="p9"><span class="s10"><span class="Apple-tab-span">	</span></span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span>1.0.wait;</p>
 <p class="p6"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space"> <span class="Apple-tab-span">	</span></span></p>
-<p class="p11"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// this will wait until the server is booted</p>
-<p class="p10"><span class="s4"><span class="Apple-tab-span">	</span></span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span><span class="s2">this</span>.bootServer;</p>
+<p class="p17"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// this will wait until the server is booted</p>
+<p class="p9"><span class="s10"><span class="Apple-tab-span">	</span></span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span><span class="s2">this</span>.bootServer;</p>
 <p class="p6"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space"> <span class="Apple-tab-span">	</span></span></p>
-<p class="p11"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// if the server is already booted it will free all nodes</p>
-<p class="p11"><span class="Apple-tab-span">	</span><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// and create new allocators, giving you a clean slate</p>
-<p class="p6"><span class="s4"><span class="Apple-tab-span">	</span></span><span class="Apple-tab-span">	</span><span class="Apple-converted-space"> <span class="Apple-tab-span">	</span></span></p>
-<p class="p10"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span>p = { <span class="s2">SinOsc</span>.ar };</p>
-<p class="p10"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span>p.play;</p>
-<p class="p10"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span>p.register;</p>
+<p class="p17"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// if the server is already booted it will free all nodes</p>
+<p class="p17"><span class="Apple-tab-span">	</span><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// and create new allocators, giving you a clean slate</p>
+<p class="p6"><span class="s10"><span class="Apple-tab-span">	</span></span><span class="Apple-tab-span">	</span><span class="Apple-converted-space"> <span class="Apple-tab-span">	</span></span></p>
+<p class="p9"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span>p = { <span class="s2">SinOsc</span>.ar };</p>
+<p class="p9"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span>p.play;</p>
+<p class="p9"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span>p.register;</p>
 <p class="p6"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space"> <span class="Apple-tab-span">	</span></span></p>
-<p class="p11"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// will wait until the condition is true</p>
-<p class="p11"><span class="Apple-tab-span">	</span><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// will be considered a failure after 10 seconds</p>
-<p class="p10"><span class="s4"><span class="Apple-tab-span">	</span></span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span><span class="s2">this</span>.wait( { p.isPlaying }, <span class="s5">"waiting for synth to play"</span>, 10);</p>
+<p class="p17"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// will wait until the condition is true</p>
+<p class="p17"><span class="Apple-tab-span">	</span><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span></span>// will be considered a failure after 10 seconds</p>
+<p class="p9"><span class="s10"><span class="Apple-tab-span">	</span></span><span class="Apple-tab-span">	</span><span class="Apple-converted-space">  <span class="Apple-tab-span">	</span></span><span class="s2">this</span>.wait( { p.isPlaying }, <span class="s11">"waiting for synth to play"</span>, 10);</p>
 <p class="p6"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-converted-space"> <span class="Apple-tab-span">	</span></span></p>
-<p class="p10"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>}</p>
+<p class="p9"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>}</p>
 <p class="p6"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></p>
-<p class="p10"><span class="Apple-tab-span">	</span>}</p>
+<p class="p9"><span class="Apple-tab-span">	</span>}</p>
 <p class="p6"><br></p>
 </body>
 </html>
