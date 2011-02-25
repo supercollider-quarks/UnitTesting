@@ -97,6 +97,7 @@ UnitTest {
 			allTestClasses.asSortedArray[classlist.value][1].asSortedArray[widg.value][1].value
 		};
 		
+		classlist.value_(0);
 		classlist.doAction; // fills in the right-hand column
 		^w.front;
 	
