@@ -77,12 +77,14 @@ UnitTest {
 		
 		this.findTestClasses;
 		
-		w = Window.new("[UnitTest GUI]", Rect(100, 100, 400, 600));
+		w = Window.new("[UnitTest GUI]", Rect(100, 100, 415, 615), resizable: false);
+		w.addFlowLayout;
 		
 		StaticText(w, Rect(0,0, 400, 40))
-			.string_("Select a class, then a test method, and press Enter");
+			.string_("Select a category, then a test method, and press Enter")
+			.align_(\center);
 		
-		classlist = ListView(w, Rect(0,40, 200, 600-40))
+		classlist = ListView(w, Rect(0,0, 200, 600-40))
 			.items_(allTestClasses.asSortedArray.collect(_[0]))
 			.action_{|widg| 
 				methodlist.items_(
