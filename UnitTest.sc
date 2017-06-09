@@ -172,16 +172,35 @@ UnitTest {
 				a[startFrom..],
 				if(b.isArray) { b[startFrom..] } { b }
 			);
-			this.failed(currentMethod,message, report);
+			this.failed(currentMethod, message, report);
 			if(onFailure.notNil) {
 				{ onFailure.value }.defer;
 				Error("UnitTest halted with onFailure handler.").throw;
 			};
 			^false
 		}{
-			this.passed(currentMethod,message, report)
+			this.passed(currentMethod, message, report)
 			^true
 		}
+	}
+
+	assertEvery { |array, func, message = "", report = true, onFailure|
+		var failed = false;
+		array.do { |item, i|
+			var test = func.value(item);
+			if(test.not) {
+				failed = true;
+				message = message + "\nshould be true for % (item index %).".format(item.asCompileString, i)
+			}
+		};
+		if(failed) {
+			this.failed(currentMethod, message, report);
+			^false
+		} {
+			this.passed(currentMethod, message, report);
+			^true
+		}
+
 	}
 
 	// make a further assertion only if it passed, or only if it failed

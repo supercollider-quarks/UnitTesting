@@ -1,8 +1,8 @@
 
 TestUnitTest : UnitTest {
-	
+
 	var someVar,toreDown,count = 0;
-	
+
 	setUp {
 		someVar = "setUp";
 		count = count + 1;
@@ -11,7 +11,7 @@ TestUnitTest : UnitTest {
 		someVar = "tearDown";
 		toreDown = true;
 	}
-	
+
 	test_setUp {
 		this.assert( count == 1, "count should be on 1");
 		this.assert( someVar == "setUp", "someVar be set in setUp" );
@@ -26,11 +26,15 @@ TestUnitTest : UnitTest {
 	test_assert {
 		this.assert(true, "assert(true) should certainly work");
 	}
+
+	test_assertEvery {
+		this.assertEvery([true, true, true], { |x| x }, "assertEvery([true, true, true]) should certainly work");
+	}
 /*
 	test_failure {
 		this.assert( false, "should fail")
 	}
-*/	
+*/
 
 	test_bootServer {
 		this.bootServer;
@@ -42,8 +46,8 @@ TestUnitTest : UnitTest {
 			this.assert( Server.default.serverRunning,"server is indeed running");
 			}, "assert asynch should have triggered the server to boot and then run the test block");
 	}
-*/	
-	
+*/
+
 	test_findTestedClass {
 		this.assertEquals( TestMixedBundleTester.findTestedClass, MixedBundleTester)
 	}
