@@ -171,8 +171,6 @@ A message supplementing the result of the test comparison.
 argument:: onFailure
 If not code::nil::, a failure stops the tests and evaluates this function.
 
-
-
 code::
 UnitTest.new.assertFloatEquals(2, 2.00001, "Two does equal two.", 0.00001);
 UnitTest.new.assertFloatEquals(2, 2.001, "Two does equal two.", 0.0001);
