@@ -107,7 +107,7 @@ YourClass.test
 ::
 Runs the test class for code::YourClass::, which is assumed to be named code::TestYourClass::.
 
-If no test class if found it politely declines.
+If no test class is found, it politely declines.
 
 note::
 UnitTests for the Common library classes are kept in the CommonTests quark. 	This enables you to easily install and uninstall these tests.
