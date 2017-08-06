@@ -122,7 +122,10 @@ argument:: test
 Make sure that this returns a boolean, where code::true:: means that the test is passed.
 
 argument:: message
-posted if report is true.
+A message reflecting the result of the test.
+
+argument:: report
+Reports the result of the test if code::true:: (default is code::true::)
 
 argument:: onFailure
 If not code::nil::, a failure stops the tests and evaluates this function.
