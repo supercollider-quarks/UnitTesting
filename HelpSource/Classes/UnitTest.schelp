@@ -229,11 +229,18 @@ code::
 )
 ::
 
-METHOD:: failed
-call failure directly.
+METHOD:: passed
+Register a passed test.
 
 code::
 UnitTest.new.passed(message: "this passed");
+::
+
+METHOD:: failed
+Register a test failure.
+
+code::
+UnitTest.new.failed(message: "this failed");
 ::
 
 SUBSECTION:: UnitTest (sub)class  example.
