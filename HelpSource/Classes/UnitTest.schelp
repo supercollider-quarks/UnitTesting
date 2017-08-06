@@ -153,14 +153,14 @@ As for link::#-assert#assert::.
 
 METHOD:: assertFloatEquals
 
-Make sure that the two floats code::a:: and code::b:: equal within a given range (code::within::).
+Make sure that the two floats code::got:: and code::expected:: equal within a given range (code::within::).
 
 
-argument:: a
-a float
+argument:: got
+the expression to test, which returns a float
 
-argument:: b
-a float
+argument:: expected
+the float value expected
 
 argument:: message
 posted if report is true.

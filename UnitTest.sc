@@ -143,13 +143,13 @@ UnitTest {
 		^boolean
 	}
 
-	assertEquals { |a, b, message = "", report = true, onFailure |
-		this.assert( a == b, message + "\nIs:\n\t" + a + "\nShould be:\n\t" + b + "\n", report, onFailure)
+	assertEquals { |got, expected, message = "", report = true, onFailure |
+		this.assert(got == expected, message + "\nIs:\n\t" + got + "\nShould be:\n\t" + expected + "\n", report, onFailure)
 	}
 
-	assertFloatEquals { |a, b, message = "", within = 0.0001, report = true, onFailure|
-		this.assert( (a - b).abs <= within,
-			message + "\nIs:\n\t" + a + "\nShould equal (within range" + within ++ "):\n\t" + b + "\n", report, onFailure);
+	assertFloatEquals { |got, expected, message = "", within = 0.0001, report = true, onFailure|
+		this.assert((got - expected).abs <= within,
+			message + "\nIs:\n\t" + got + "\nShould equal (within range" + within ++ "):\n\t" + expected + "\n", report, onFailure);
 	}
 
 	assertArrayFloatEquals { |a, b, message = "", within = 0.0001, report = true, onFailure|
