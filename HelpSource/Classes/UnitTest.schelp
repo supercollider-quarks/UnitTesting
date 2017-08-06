@@ -118,8 +118,10 @@ Make sure to implement the methods code::setUp:: and code::tearDown::. They will
 
 METHOD:: assert
 
+Asserts that an expression must be true.
+
 argument:: test
-Make sure that this returns a boolean, where code::true:: means that the test is passed.
+An expression which is expected to return a boolean, where code::true:: means that the test is passed.
 
 argument:: message
 A message reflecting the result of the test.
@@ -137,7 +139,7 @@ UnitTest.new.assert(2 == 2.00001, "Two does equal two.");
 
 METHOD:: assertEquals
 
-Make sure that the two values code::got:: and code::expected:: are equal.
+Asserts that an expression code::got:: is equal to the value code::expected::.
 
 argument:: got
 the expression to test
@@ -156,8 +158,7 @@ As for link::#-assert#assert::.
 
 METHOD:: assertFloatEquals
 
-Make sure that the two floats code::got:: and code::expected:: equal within a given range (code::within::).
-
+Asserts that an expression code::got:: returning a float is within a given range (code::within::) of being equal to code::expected::.
 
 argument:: got
 the expression to test, which returns a float
@@ -179,11 +180,11 @@ UnitTest.new.assertFloatEquals(2, 2.001, "Two does equal two.", 0.0001);
 method:: assertArrayFloatEquals
 Make sure that the two arrays of floats code::a:: and code::b:: equal within a given range (code::within::).
 
-argument:: a
-an code::Array:: of floats
+argument:: got
+the expression to test, which is an code::Array:: of floats
 
-argument:: b
-an code::Array:: of floats
+argument:: expected
+the code::Array:: of float values expected
 
 argument:: message
 posted if report is true.
