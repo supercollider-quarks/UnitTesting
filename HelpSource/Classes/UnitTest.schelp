@@ -110,7 +110,7 @@ Runs the test class for code::YourClass::, which is assumed to be named code::Te
 If no test class is found, it politely declines.
 
 note::
-UnitTests for the Common library classes are kept in the CommonTests quark. 	This enables you to easily install and uninstall these tests.
+UnitTests for the Common library classes are kept in the CommonTests quark. This enables you to easily install and uninstall these tests.
 ::
 
 
@@ -246,7 +246,7 @@ code::
 UnitTest.new.failed(message: "this failed");
 ::
 
-SUBSECTION:: UnitTest (sub)class  example.
+SUBSECTION:: UnitTest (sub)class example.
 
 code::
 TestYourClass : UnitTest {
