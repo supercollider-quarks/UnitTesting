@@ -132,6 +132,25 @@ UnitTest.new.assert(2 == 2, "Two does equal two.");
 UnitTest.new.assert(2 == 2.00001, "Two does equal two.");
 ::
 
+METHOD:: assertEquals
+
+Make sure that the two values code::got:: and code::expected:: are equal.
+
+argument:: got
+the expression to test
+
+argument:: expected
+the expected return value
+
+argument:: message
+A message supplementing the result of the test comparison.
+
+argument:: report
+As for link::#-assert#assert::.
+
+argument:: onFailure
+As for link::#-assert#assert::.
+
 METHOD:: assertFloatEquals
 
 Make sure that the two floats code::a:: and code::b:: equal within a given range (code::within::).
