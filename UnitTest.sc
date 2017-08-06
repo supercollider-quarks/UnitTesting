@@ -92,8 +92,6 @@ UnitTest {
 			)
 		};
 
-		// nowork: classlist.enterKeyAction_{|widg| methodlist.valueAction_(0)};
-
 		methodlist = ListView(w, Rect(200,40, 200, 600-40));
 		methodlist.enterKeyAction_ {|widg|
 			allTestClasses.asSortedArray[classlist.value][1].asSortedArray[widg.value][1].value
@@ -114,6 +112,12 @@ UnitTest {
 
 		methodlist.keyDownAction = lookUp;
 		classlist.keyDownAction = lookUp;
+
+		classlist.enterKeyAction_{|widg|
+			// mimic behaviour of pressing enter in methodlist
+			methodlist.enterKey;
+		};
+
 
 		classlist.value_(0);
 		classlist.doAction; // fills in the right-hand column
