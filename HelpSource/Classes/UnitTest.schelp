@@ -166,7 +166,7 @@ argument:: expected
 the float value expected
 
 argument:: message
-posted if report is true.
+A message supplementing the result of the test comparison.
 
 argument:: onFailure
 If not code::nil::, a failure stops the tests and evaluates this function.
