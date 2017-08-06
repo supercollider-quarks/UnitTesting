@@ -9,14 +9,9 @@ In order to make sure a method works correctly, a test can be implemented that a
 It is a common practice to write tests to clarify how an object should respond, and it may avoid inconsistencies on the long run. A test is always a subclass of code::UnitTest::, implementing at least one method starting with code::test_::.
 
 note::
-UnitTests for the Common library classes are kept in the CommonTests quark. 	This enables you to easily install and uninstall these tests.
+UnitTests for the Common library classes are kept in the code::testsuite/classlibrary:: directory of the SuperCollider sources.
 
-To install:
-
-code::
-"CommonTests".include;
-::
-
+To install, link::https://github.com/supercollider/supercollider##download the sources:: and add the directory to your code::sclang_conf.yaml::, either by editing it or via the ScIDE preferences.
 ::
 
 
@@ -25,7 +20,7 @@ CLASSMETHODS::
 PRIVATE:: allTestClasses, classesWithTests, classesWithoutTests, failures, findTestClass, findTestClasses, findTestMethods, findTestedClass, forkIfNeeded, listUntestedMethods, passes, report, reportPasses, reset, run, untestedMethods
 
 METHOD:: gui
-For a graphical interface to all tests, run this line:
+A graphical interface to run and browse all tests
 
 code::
 UnitTest.gui
@@ -102,7 +97,7 @@ TestUnitTest.new.runTestMethod(TestUnitTest.findMethod(\test_assert));
 
 returns:: (describe returnvalue here)
 
-PRIVATE:: assert, assertArrayFloatEquals, asynchAssert, tearDown, assertEquals, failed, passed, assertFloatEquals, s, ifAsserts, findTestMethods, wait, bootServer
+PRIVATE:: assert, assertArrayFloatEquals, asynchAssert, tearDown, setUp, assertEquals, failed, passed, assertFloatEquals, s, ifAsserts, findTestMethods, wait, bootServer
 
 
 SECTION:: Writing tests by subclassing UnitTest
