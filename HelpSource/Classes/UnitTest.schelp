@@ -107,10 +107,10 @@ YourClass.test
 ::
 Runs the test class for code::YourClass::, which is assumed to be named code::TestYourClass::.
 
-If no test class if found it politely declines.
+If no test class is found, it politely declines.
 
 note::
-UnitTests for the Common library classes are kept in the CommonTests quark. 	This enables you to easily install and uninstall these tests.
+UnitTests for the Common library classes are kept in the CommonTests quark. This enables you to easily install and uninstall these tests.
 ::
 
 
@@ -118,52 +118,73 @@ Make sure to implement the methods code::setUp:: and code::tearDown::. They will
 
 METHOD:: assert
 
+Asserts that an expression must be true.
+
 argument:: test
-Make sure that this returns a boolean, where code::true:: means that the test is passed.
+An expression which is expected to return a boolean, where code::true:: means that the test is passed.
 
 argument:: message
-posted if report is true.
+A message reflecting the result of the test.
+
+argument:: report
+Reports the result of the test if code::true:: (default is code::true::)
 
 argument:: onFailure
 If not code::nil::, a failure stops the tests and evaluates this function.
 
 code::
 UnitTest.new.assert(2 == 2, "Two does equal two.");
-UnitTest.new.assert(2 == 2.00001, "Two does equal two.");
+UnitTest.new.assert(2 == 2.00001, "Two doesn't equal 2.00001.");
 ::
+
+METHOD:: assertEquals
+
+Asserts that an expression code::got:: is equal to the value code::expected::.
+
+argument:: got
+the expression to test
+
+argument:: expected
+the expected return value
+
+argument:: message
+A message supplementing the result of the test comparison.
+
+argument:: report
+As for link::#-assert#assert::.
+
+argument:: onFailure
+As for link::#-assert#assert::.
 
 METHOD:: assertFloatEquals
 
-Make sure that the two floats code::a:: and code::b:: equal within a given range (code::within::).
+Asserts that an expression code::got:: returning a float is within a given range (code::within::) of being equal to code::expected::.
 
+argument:: got
+the expression to test, which returns a float
 
-argument:: a
-a float
-
-argument:: b
-a float
+argument:: expected
+the float value expected
 
 argument:: message
-posted if report is true.
+A message supplementing the result of the test comparison.
 
 argument:: onFailure
 If not code::nil::, a failure stops the tests and evaluates this function.
 
-
-
 code::
-UnitTest.new.assertFloatEquals(2, 2.00001, "Two does equal two.", 0.00001);
-UnitTest.new.assertFloatEquals(2, 2.001, "Two does equal two.", 0.0001);
+UnitTest.new.assertFloatEquals(2, 2.0001, "Two is close enough to 2.0001.", 0.001);
+UnitTest.new.assertFloatEquals(2, 2.0001, "Two isn't close enough to 2.0001.", 0.0001);
 ::
 
 method:: assertArrayFloatEquals
 Make sure that the two arrays of floats code::a:: and code::b:: equal within a given range (code::within::).
 
-argument:: a
-an code::Array:: of floats
+argument:: got
+the expression to test, which is an code::Array:: of floats
 
-argument:: b
-an code::Array:: of floats
+argument:: expected
+the code::Array:: of float values expected
 
 argument:: message
 posted if report is true.
@@ -172,7 +193,8 @@ argument:: onFailure
 If not code::nil::, a failure stops the tests and evaluates this function.
 
 code::
-UnitTest.new.assertArrayFloatEquals([2, 3], [2, 3] + 0.00001, "Same Floats", 0.000001);
+UnitTest.new.assertArrayFloatEquals([2, 3] + 0.0001, [2, 3], "Floats are close enough", 0.001);
+UnitTest.new.assertArrayFloatEquals([2, 3.0001], [2, 3], "Floats aren't both close enough", 0.0001);
 ::
 
 METHOD:: ifAsserts
@@ -210,14 +232,21 @@ code::
 )
 ::
 
-METHOD:: failed
-call failure directly.
+METHOD:: passed
+Register a passed test.
 
 code::
 UnitTest.new.passed(message: "this passed");
 ::
 
-SUBSECTION:: UnitTest (sub)class  example.
+METHOD:: failed
+Register a test failure.
+
+code::
+UnitTest.new.failed(message: "this failed");
+::
+
+SUBSECTION:: UnitTest (sub)class example.
 
 code::
 TestYourClass : UnitTest {
